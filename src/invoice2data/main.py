@@ -7,6 +7,7 @@ import os
 from os.path import join
 import logging
 
+from .input import text
 from .input import pdftotext
 from .input import pdfminer_wrapper
 from .input import tesseract
@@ -23,6 +24,7 @@ from .output import to_xml
 logger = logging.getLogger(__name__)
 
 input_mapping = {
+    "text": text,
     "pdftotext": pdftotext,
     "tesseract": tesseract,
     "tesseract4": tesseract4,
@@ -81,14 +83,13 @@ def extract_data(invoicefile, templates=None, input_module=pdftotext):
     # print(templates[0])
     extracted_str = input_module.to_text(invoicefile).decode("utf-8")
 
-    logger.debug("START pdftotext result ===========================")
+    logger.debug("START input-reader result ===========================")
     logger.debug(extracted_str)
-    logger.debug("END pdftotext result =============================")
+    logger.debug("END input-reader result =============================")
 
     logger.debug("Testing {} template files".format(len(templates)))
     for t in templates:
-        optimized_str = t.prepare_input(extracted_str)
-
+        optimized_str = t.prepare_input(extracted_str)     
         if t.matches_input(optimized_str):
             return t.extract(optimized_str)
 
