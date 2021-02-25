@@ -51,6 +51,7 @@ Basic usage. Process PDF files and write result to CSV.
 
 Choose any of the following input readers:
 
+- text `invoice2data --input-reader text invoice.txt` (null input-reader, just parse the text file. As the input file is already text extraction is not needed)
 - pdftotext `invoice2data --input-reader pdftotext invoice.pdf`
 - tesseract `invoice2data --input-reader tesseract invoice.pdf`
 - pdf miner `invoice2data --input-reader pdfminer invoice.pdf`
